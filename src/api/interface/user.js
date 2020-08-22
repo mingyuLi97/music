@@ -6,7 +6,14 @@ const login = (phone, password)=>{
   });
 };
 
+const getUserDetail = (uid) => {
+  return axios({
+    url: `/user/detail?uid=${uid}`
+  });
+};
+
 
 export default {
-  login
+  login,
+  getUserDetail
 };
