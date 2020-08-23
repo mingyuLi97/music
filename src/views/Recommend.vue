@@ -1,11 +1,15 @@
 <template>
   <div>
-    发现
+    <banner />
   </div>
 </template>
 
 <script>
+import Banner from '@/components/Banner';
 export default {
+  components:{
+    Banner
+  },
   data() { 
     return {
 
