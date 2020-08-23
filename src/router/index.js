@@ -2,6 +2,12 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
 
+
+const originalPush = VueRouter.prototype.push;
+VueRouter.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err);
+};
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -21,7 +27,27 @@ const routes = [
   {
     path: '/login',
     component: () => import('@/views/Login.vue')
-  }
+  },
+  {
+    path: '/songList',
+    name: 'songList',
+    component: () => import(/* webpackChunkName: "about" */ '@/views/SongList.vue')
+  },
+  {
+    path: '/user',
+    name: 'user',
+    component: () => import(/* webpackChunkName: "about" */ '@/views/User.vue')
+  },
+  {
+    path: '/rank',
+    name: 'rank',
+    component: () => import(/* webpackChunkName: "about" */ '@/views/Rank.vue')
+  },
+  {
+    path: '/recommend',
+    name: 'recommend',
+    component: () => import(/* webpackChunkName: "about" */ '@/views/Recommend.vue')
+  },
 ];
 
 const router = new VueRouter({
