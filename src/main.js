@@ -10,9 +10,12 @@ import { Toast } from 'vant';
 
 Vue.use(Vant);
 
+import utils from '@/utils';
+
 Vue.config.productionTip = false;
 Vue.prototype.$api = api;
 Vue.prototype.$toast = Toast;
+Vue.prototype.utils = utils;
 
 new Vue({
   router,

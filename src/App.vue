@@ -4,14 +4,17 @@
     <div class="container">
       <router-view />
     </div>
+    <play-bar class="play-bar"/>
   </div>
 </template>
 
 <script>
 import NavBar from '@/components/NavBar';
+import PlayBar from '@/components/PlayBar';
 export default {
   components: {
-    NavBar
+    NavBar,
+    PlayBar
   }
 };
 </script>
@@ -24,9 +27,18 @@ export default {
     position: fixed;
     width: 100%;
     top: 0;
+    background-color: #ffffff;
+    z-index: 999;
   }
   .container{
     margin-top: 13.333vw;
+  }
+  .play-bar{
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    background-color: #ffffff;
+    z-index: 999;
   }
 }
 * {

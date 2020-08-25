@@ -83,6 +83,7 @@ export default {
       flex: 1;
       justify-content: space-between;
       text-align: center;
+      font-size: 4.8vw;
       line-height: 5.333vw;
     }
     .activate{

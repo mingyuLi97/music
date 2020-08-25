@@ -36,32 +36,31 @@ export default {
 <style lang='scss' scoped>
 
 .banner-wrap{
-    margin: 0 10px;
-
+    margin: 0 2.667vw;
     .van-swipe{
         overflow: hidden;
         transform: translateY(0);
-        border-radius: 4px;
+        border-radius: 1.067vw;
     }
     .van-swipe-item{
         position: relative;
-        margin-bottom: -6px;
+        margin-bottom: -1.6vw;
     }
     img{
         width: 100%;
         height: 100%;
-        border-radius: 4px;
+        border-radius: 1.067vw;
     }
     span{
         position: absolute;
-        bottom: 6px;
+        bottom: 1.6vw;
         right: 0;
         color: #ffffff;
-        font-size: 12px;
-        line-height: 20px;
-        padding: 0 5px;
-        border-top-left-radius: 4px;
-        border-bottom-right-radius: 4px;
+        font-size: 3.2vw;
+        line-height: 5.333vw;
+        padding: 0 1.333vw;
+        border-top-left-radius: 1.067vw;
+        border-bottom-right-radius: 1.067vw;
         background-color: #fa2800;
     }
 
