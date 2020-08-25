@@ -61,7 +61,8 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '@/views/Recommend.vue'),
     meta:{
       navBar: true,
-      playBar: true
+      playBar: true,
+      isKeep: true
     }
   },
   {

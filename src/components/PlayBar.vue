@@ -1,6 +1,10 @@
 <template>
   <div class="play-bar-wrap" @click="toPlayPage">
-      
+
+    <audio
+      ref="audio"
+      :src="curSong.mp3Url"
+    />
     <img :src="curSong.picUrl" alt="封面">
 
     <div class="content">
@@ -14,7 +18,7 @@
       </svg>
       <van-circle
         v-model="currentRate"
-        :rate="rate"
+        :rate="curProgress"
         color="#fa2800"
         layer-color="#4a4a4a"
         size="8.8vw"
@@ -35,42 +39,48 @@ export default {
   data() { 
     return {
       currentRate: 0,
-      rate: 0,
-      playStatus: false,
       timer: null
     };
   },
   watch:{
-    playStatus(status){
-      if(status){
-        this.timer =  setInterval(()=>{
-          if(this.rate++ > 100){
-            this.playStatus = false;
-            this.rate = 0;
-          }
-
-        }, 100);
+    playState: function(state, val){
+      if(state){
+        this._updateTime();
+        setTimeout(()=>{
+          this.$refs.audio.play();
+        },0);
       }else{
+        this.$refs.audio.pause();
         this.timer && clearInterval(this.timer);
       }
+    },
+    volume(val){
+      this.$refs.audio.volume = val / 100;
+    },
+    forceTime(val){
+      this.$refs.audio.currentTime = val;
     }
   },
   computed:{
-    ...mapState(['playState']),
-    ...mapGetters(['curSong'])
+    ...mapState(['playState', 'volume', 'forceTime']),
+    ...mapGetters(['curSong', 'curProgress'])
   },
   methods:{
-    ...mapMutations(['setPlayState']),
-    play(){
-      this.playStatus = !this.playStatus;
-      console.log('play');
-    },
+    ...mapMutations(['setPlayState', 'updateTime']),
     toPlayPage(){
       console.log('toPlayPage');
       this.$router.push('/play');
     },
     showMenu(){
       console.log('showMenu');
+    },
+    _updateTime(){
+      this.timer = setInterval(()=>{
+        this.updateTime({
+          curTime: Math.floor(this.$refs.audio.currentTime),
+          totalTime: Math.floor(this.$refs.audio.duration)
+        });
+      }, 100);
     }
   }
 };

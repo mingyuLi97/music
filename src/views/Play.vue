@@ -8,11 +8,10 @@
       <!-- 声音控制 -->
       <div class="vol-bar">
         <svg class="icon" aria-hidden="true">
-          <use xlink:href="#icon-shengyin" ></use>
+          <use xlink:href="#icon-shengyin"></use>
         </svg>
         <van-slider
           v-model="volVal"
-          @change="onChange" 
           button-size="10"
           active-color="#fa2800"
         />
@@ -25,14 +24,13 @@
 
       <!--  歌曲进度 -->
       <div class="progress-bar">
-        <span>03:32</span>
+        <span>{{curTimeStr}}</span>
         <van-slider
-          v-model="volVal"
-          @change="onChange" 
+          v-model="progressVal"
           button-size="10"
           active-color="#cccccc"
         />
-        <span>06:32</span>
+        <span>{{totalTimeStr}}</span>
       </div>
 
       <!-- 控制 -->
@@ -60,11 +58,11 @@
 
         <!-- 播放/暂停 -->
         <div @click.stop="setPlayState(!playState)">
-          <svg class="icon" aria-hidden="true" v-show="playState">
+          <svg class="icon" aria-hidden="true" v-show="!playState">
             <use xlink:href="#icon-bofangsanjiaoxing" ></use>
           </svg>
 
-          <svg class="icon" aria-hidden="true" v-show="!playState">
+          <svg class="icon" aria-hidden="true" v-show="playState">
             <use xlink:href="#icon-zanting" ></use>
           </svg>
         </div>
@@ -88,6 +86,9 @@
 import BackBar from '@/components/common/BackBar';
 import {mapState, mapGetters, mapMutations} from 'vuex';
 import {playMode} from '@/model/playMode';
+import utils from '@/utils';
+import playBar from '@/components/PlayBar';
+
 export default {
   components:{
     BackBar
@@ -98,8 +99,8 @@ export default {
     };
   },
   computed:{
-    ...mapState(['playState', 'mode', 'volume']),
-    ...mapGetters(['curSong']),
+    ...mapState(['playState', 'mode', 'volume', 'curTime', 'totalTime']),
+    ...mapGetters(['curSong', 'curProgress']),
     volVal:{
       get(){
         return this.volume;
@@ -107,12 +108,27 @@ export default {
       set(val){
         this.setVolume(val);
       }
+    },
+    progressVal:{
+      get(){
+        return this.curProgress;
+      },
+      set(val){
+        this.setForceTime(val / 100 * this.totalTime);
+      }
+    },
+    totalTimeStr(){
+      return this.getTimeStr(this.totalTime);
+    },
+    curTimeStr(){
+      return this.getTimeStr(this.curTime);
     }
   },
   methods:{
-    ...mapMutations(['setPlayState', 'setPlayMode', 'setVolume']),
-    onChange(){
-      console.log('onChange');
+    ...mapMutations(['setPlayState', 'setPlayMode', 'setVolume', 'setForceTime']),
+    getTimeStr(time){
+      const timeStr = utils.second2time(time);
+      return timeStr.startsWith('00:') ? timeStr.substring(3) :timeStr;
     }
   }
 };

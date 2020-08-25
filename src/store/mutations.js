@@ -40,5 +40,18 @@ export default {
    */
   setVolume(state, volume){
     state.volume = volume;
+  },
+  /**
+   * @method 设置当前播放的时间
+   */
+  updateTime(state, payload){
+    state.curTime = payload.curTime;
+    state.totalTime = payload.totalTime;
+  },
+  /**
+   * @method 强制修改播放器进度
+   */
+  setForceTime(state, forceTime){
+    state.forceTime = forceTime;
   }
 };

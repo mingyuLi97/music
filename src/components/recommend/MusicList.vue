@@ -61,20 +61,22 @@ export default {
             });
           console.log(this.musicArr);
           // 初始化 vuex 临时代替
-          this.setPlayState(false);
           this.setPlayMode(playMode.sequence);
           this.setPlayList(this.musicArr);
           this.setPlayIndex(0);
+          this.setPlayState(false);
         })
         .catch(err=>{
           console.log(err);
         });
     },
     playMusic(id){
-      this.setPlayState(true);
+      console.log('playMusic');
       this.setPlayMode(playMode.sequence);
       this.setPlayList(this.musicArr);
+      console.log(this.musicArr.findIndex(item => item.id === id));
       this.setPlayIndex(this.musicArr.findIndex(item => item.id === id));
+      this.setPlayState(true);
     },
     ...mapMutations([
       'setPlayMode',

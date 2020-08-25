@@ -3,8 +3,12 @@
     <div class="container" v-if="$route.meta.navBar">
       <nav-bar class="nav-bar" />
     </div>
-    <router-view />
-    <play-bar class="play-bar" v-if="$route.meta.playBar"/>
+    <!-- <router-view /> -->
+    <keep-alive>
+      <router-view v-if="$route.meta.isKeep"></router-view>
+    </keep-alive>
+    <router-view v-if="!$route.meta.isKeep"></router-view>
+    <play-bar class="play-bar" v-show="$route.meta.playBar"/>
   </div>
 </template>
 
