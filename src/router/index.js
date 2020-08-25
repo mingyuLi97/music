@@ -14,7 +14,11 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
+    meta:{
+      navBar: true,
+      playBar: true
+    }
   },
   {
     path: '/about',
@@ -36,18 +40,38 @@ const routes = [
   {
     path: '/user',
     name: 'user',
-    component: () => import(/* webpackChunkName: "about" */ '@/views/User.vue')
+    component: () => import(/* webpackChunkName: "about" */ '@/views/User.vue'),
+    meta:{
+      navBar: true,
+      playBar: true
+    }
   },
   {
     path: '/rank',
     name: 'rank',
-    component: () => import(/* webpackChunkName: "about" */ '@/views/Rank.vue')
+    component: () => import(/* webpackChunkName: "about" */ '@/views/Rank.vue'),
+    meta:{
+      navBar: false,
+      playBar: true
+    }
   },
   {
     path: '/recommend',
     name: 'recommend',
-    component: () => import(/* webpackChunkName: "about" */ '@/views/Recommend.vue')
+    component: () => import(/* webpackChunkName: "about" */ '@/views/Recommend.vue'),
+    meta:{
+      navBar: true,
+      playBar: true
+    }
   },
+  {
+    path: '/play',
+    component: () => import(/* webpackChunkName: "about" */ '@/views/Play.vue'),
+    meta:{
+      navBar: false,
+      playBar: false
+    }
+  }
 ];
 
 const router = new VueRouter({

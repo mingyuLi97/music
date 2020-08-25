@@ -1,16 +1,15 @@
 <template>
-  <div class="play-bar-wrap">
+  <div class="play-bar-wrap" @click="toPlayPage">
       
-    <img src="@/assets/images/logo.jpeg" alt="" @click="play()">
-
+    <img :src="curSong.picUrl" alt="封面">
 
     <div class="content">
-      <span>歌曲名称歌曲名称歌曲名称歌曲名称歌曲名称歌曲名称歌曲名称歌曲名称歌曲名称</span>
-      <span>当前正在播放的歌词当前正在播放的歌词当前正在播放的歌词当前正在播放的歌词</span>
+      <span>{{curSong.name}}</span>
+      <span>喜欢你是我独家的记忆</span>
     </div>
-    <div class="control" @click="play()">
+    <div class="control" @click.stop="changePlayState">
       <svg class="icon" aria-hidden="true">
-        <use xlink:href="#icon-zanting" v-if="playStatus"></use>
+        <use xlink:href="#icon-zanting" v-if="playState"></use>
         <use xlink:href="#icon-ai23" v-else></use>
       </svg>
       <van-circle
@@ -23,7 +22,7 @@
       />
     </div>
 
-    <svg class="icon menu" aria-hidden="true">
+    <svg class="icon menu" aria-hidden="true" @click.stop="showMenu">
       <use xlink:href="#icon-list"></use>
     </svg>
 
@@ -31,6 +30,7 @@
 </template>
 
 <script>
+import {mapState, mapGetters, mapMutations} from 'vuex'; 
 export default {
   data() { 
     return {
@@ -55,9 +55,25 @@ export default {
       }
     }
   },
+  computed:{
+    ...mapState(['playState']),
+    ...mapGetters(['curSong'])
+  },
   methods:{
+    ...mapMutations(['setPlayState']),
+    changePlayState(){
+      this.setPlayState(!this.playState);
+    },
     play(){
       this.playStatus = !this.playStatus;
+      console.log('play');
+    },
+    toPlayPage(){
+      console.log('toPlayPage');
+      this.$router.push('/play');
+    },
+    showMenu(){
+      console.log('showMenu');
     }
   }
 };
@@ -106,7 +122,6 @@ export default {
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            color: #fa2800;
             font-size: 20px;
         }
     }

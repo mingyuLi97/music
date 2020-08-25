@@ -13,7 +13,6 @@
           @click="changeCategory(item)"
         >
           {{item.text}}
-          <!-- <router-link :to="{ name: item.name }" tag="span">{{item.text}}</router-link> -->
         </li>
       </ul>
       
@@ -28,13 +27,13 @@
 const CATEGORY_ARR = [
   {
     id: 0,
-    name:'recommend',
-    text: '发现'
+    name:'user',
+    text: '我的'
   },
   {
     id: 1,
-    name:'user',
-    text: '我的'
+    name:'recommend',
+    text: '发现'
   }, 
   {
     id: 2,

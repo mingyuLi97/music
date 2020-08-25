@@ -1,10 +1,10 @@
 <template>
   <div id="app">
-    <nav-bar class="nav-bar"></nav-bar>
-    <div class="container">
-      <router-view />
+    <div class="container" v-if="$route.meta.navBar">
+      <nav-bar class="nav-bar" />
     </div>
-    <play-bar class="play-bar"/>
+    <router-view />
+    <play-bar class="play-bar" v-if="$route.meta.playBar"/>
   </div>
 </template>
 
@@ -15,6 +15,9 @@ export default {
   components: {
     NavBar,
     PlayBar
+  },
+  mounted(){
+    console.log(this.$route.meta);
   }
 };
 </script>
@@ -23,6 +26,7 @@ export default {
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   position: relative;
+
   .nav-bar{
     position: fixed;
     width: 100%;
@@ -31,7 +35,7 @@ export default {
     z-index: 999;
   }
   .container{
-    margin-top: 13.333vw;
+    height: 13.333vw;
   }
   .play-bar{
     position: fixed;
@@ -41,6 +45,7 @@ export default {
     z-index: 999;
   }
 }
+
 * {
   padding: 0;
   margin: 0;

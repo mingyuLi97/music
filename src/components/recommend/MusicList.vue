@@ -7,6 +7,7 @@
           v-for="item in group"
           :key="item.id"
           :data="item"
+          @play="playMusic(item.id)"
         />
       </div>
     </div>
@@ -18,6 +19,8 @@
 import Song from '@/model/song';
 import RecommendHead from './RecommendHead';
 import MusicItem from '@/components/common/MusicItem';
+import { mapMutations } from 'vuex';
+import {playMode} from '@/model/playMode';
 export default {
   components:{
     RecommendHead,
@@ -35,9 +38,9 @@ export default {
       if(musicArr.length === 9){
         for(let i = 0; i < 9; i += 3){
           const tempArr = [];
-          tempArr.push(new Song(musicArr[i]));
-          tempArr.push(new Song(musicArr[i+1]));
-          tempArr.push(new Song(musicArr[i+2]));
+          tempArr.push(musicArr[i]);
+          tempArr.push(musicArr[i+1]);
+          tempArr.push(musicArr[i+2]);
           group.push(tempArr);
         }
       }
@@ -52,13 +55,33 @@ export default {
       this.$api.getNewSongs(this.limit)
         .then(res =>{
           console.log(res);
-          this.musicArr = res.result.slice(0, 9);
+          this.musicArr = res.result
+            .slice(0, 9).map(item => {
+              return new Song(item);
+            });
           console.log(this.musicArr);
+          // 初始化 vuex 临时代替
+          this.setPlayState(false);
+          this.setPlayMode(playMode.sequence);
+          this.setPlayList(this.musicArr);
+          this.setPlayIndex(0);
         })
         .catch(err=>{
           console.log(err);
         });
-    }
+    },
+    playMusic(id){
+      this.setPlayState(true);
+      this.setPlayMode(playMode.sequence);
+      this.setPlayList(this.musicArr);
+      this.setPlayIndex(this.musicArr.findIndex(item => item.id === id));
+    },
+    ...mapMutations([
+      'setPlayMode',
+      'setPlayIndex',
+      'setPlayList',
+      'setPlayState'
+    ])
   }
 };
 </script>
