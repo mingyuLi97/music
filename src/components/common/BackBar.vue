@@ -1,5 +1,5 @@
 <template>
-  <div class="back-bar-wrap">
+  <div class="back-bar-wrap" @click="$router.go(-1)">
     <svg class="icon" aria-hidden="true">
       <use xlink:href="#icon-icon-test"></use>
     </svg>

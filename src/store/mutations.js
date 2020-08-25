@@ -34,5 +34,11 @@ export default {
    */
   setPlayState(state, playState){
     state.playState = playState;
+  },
+  /**
+   * @method 设置播放器音量
+   */
+  setVolume(state, volume){
+    state.volume = volume;
   }
 };

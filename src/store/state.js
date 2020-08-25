@@ -12,6 +12,8 @@ export default {
   // 播放列表
   playList: [],
   // 播放状态
-  playState: false
+  playState: false,
+  // 音量
+  volume: 0
 
 };

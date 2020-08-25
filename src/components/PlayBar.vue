@@ -7,7 +7,7 @@
       <span>{{curSong.name}}</span>
       <span>喜欢你是我独家的记忆</span>
     </div>
-    <div class="control" @click.stop="changePlayState">
+    <div class="control" @click.stop="setPlayState(!playState)">
       <svg class="icon" aria-hidden="true">
         <use xlink:href="#icon-zanting" v-if="playState"></use>
         <use xlink:href="#icon-ai23" v-else></use>
@@ -61,9 +61,6 @@ export default {
   },
   methods:{
     ...mapMutations(['setPlayState']),
-    changePlayState(){
-      this.setPlayState(!this.playState);
-    },
     play(){
       this.playStatus = !this.playStatus;
       console.log('play');
