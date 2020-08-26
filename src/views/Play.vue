@@ -73,7 +73,7 @@
         </svg>
 
         <!-- 播放列表 -->
-        <svg class="icon" aria-hidden="true">
+        <svg class="icon" aria-hidden="true" @click.stop="setShowPlayList(true)">
           <use xlink:href="#icon-list" ></use>
         </svg>
       </div>
@@ -125,7 +125,7 @@ export default {
     }
   },
   methods:{
-    ...mapMutations(['setPlayState', 'setPlayMode', 'setVolume', 'setForceTime']),
+    ...mapMutations(['setPlayState', 'setPlayMode', 'setVolume', 'setForceTime', 'setShowPlayList']),
     getTimeStr(time){
       const timeStr = utils.second2time(time);
       return timeStr.startsWith('00:') ? timeStr.substring(3) :timeStr;

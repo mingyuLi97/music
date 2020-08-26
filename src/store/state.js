@@ -18,9 +18,12 @@ export default {
   // 当前播放的进度
   curTime: 0,
   // 视频总长度
-  totalTime: 1,
+  totalTime: 0.1,
   // 强制修改播放进度
-  forceTime:0
+  forceTime:0,
+  // 是否显示播放列表 popup
+  // playBar 和 play 两个界面效果一样 因此借助 vuex
+  showPlayList: false
 
 
 };

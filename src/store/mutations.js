@@ -53,5 +53,11 @@ export default {
    */
   setForceTime(state, forceTime){
     state.forceTime = forceTime;
+  },
+  /**
+   * @method 是否显示播放列表弹窗
+   */
+  setShowPlayList(state, showPlayList){
+    state.showPlayList = showPlayList;
   }
 };

@@ -11,6 +11,7 @@
       <span>{{curSong.name}}</span>
       <span>喜欢你是我独家的记忆</span>
     </div>
+
     <div class="control" @click.stop="setPlayState(!playState)">
       <svg class="icon" aria-hidden="true">
         <use xlink:href="#icon-zanting" v-if="playState"></use>
@@ -29,13 +30,25 @@
     <svg class="icon menu" aria-hidden="true" @click.stop="showMenu">
       <use xlink:href="#icon-list"></use>
     </svg>
-
+    
+    <van-popup
+      v-model="show"
+      get-container="body"
+      position="bottom"
+      :round='true'
+      class="popup-play-list">
+      <popup-play-list ></popup-play-list>
+    </van-popup>
   </div>
 </template>
 
 <script>
-import {mapState, mapGetters, mapMutations} from 'vuex'; 
+import {mapState, mapGetters, mapMutations} from 'vuex';
+import PopupPlayList from '@/components/PopupPlayList';
 export default {
+  components:{
+    PopupPlayList
+  },
   data() { 
     return {
       currentRate: 0,
@@ -62,17 +75,27 @@ export default {
     }
   },
   computed:{
-    ...mapState(['playState', 'volume', 'forceTime']),
-    ...mapGetters(['curSong', 'curProgress'])
+    ...mapState(['playState', 'volume', 'forceTime', 'showPlayList']),
+    ...mapGetters(['curSong', 'curProgress']),
+    show:{
+      get(){
+        return this.showPlayList;
+      },
+      set(val){
+        this.setShowPlayList(val);
+      }
+    }
   },
   methods:{
-    ...mapMutations(['setPlayState', 'updateTime']),
+    ...mapMutations(['setPlayState', 'updateTime', 'setShowPlayList']),
     toPlayPage(){
       console.log('toPlayPage');
       this.$router.push('/play');
     },
     showMenu(){
       console.log('showMenu');
+      // this.show = true;
+      this.setShowPlayList(true);
     },
     _updateTime(){
       this.timer = setInterval(()=>{
@@ -140,4 +163,8 @@ export default {
     }
 }
 
+.popup-play-list{
+  // padding: 20px;
+  height: 60%;
+}
 </style>
