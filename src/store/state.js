@@ -24,6 +24,4 @@ export default {
   // 是否显示播放列表 popup
   // playBar 和 play 两个界面效果一样 因此借助 vuex
   showPlayList: false
-
-
 };

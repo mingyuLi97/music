@@ -2,7 +2,7 @@
   <div class="popup-play-list-wrap">
     <div class="head">
       <span>当前播放</span>
-      <span>({{playListLen}})</span>
+      <span>({{musicListLen}})</span>
     </div>
 
     <div class="tool">
@@ -33,7 +33,7 @@
       </div>
 
       <!-- 清除列表 -->
-      <svg class="icon" aria-hidden="true">
+      <svg class="icon" aria-hidden="true" @click.stop="_clearPlayList">
         <use xlink:href="#icon-dustbin_icon"></use>
       </svg>
     </div>
@@ -42,11 +42,14 @@
       <li
         v-for="item in playList"
         :key="item.id"
+        @click="_playMusicById(item.id)"
       >
         <div class="song-info" :class="{'song-info-active': (curSong.id === item.id) && playState}">
-          <svg class="icon " aria-hidden="true" v-if="(curSong.id === item.id) && playState">
-            <use xlink:href="#icon-shengyin_shiti"></use>
-          </svg>
+          <div class="song-icon" v-if="(curSong.id === item.id) && playState">
+            <svg class="icon " aria-hidden="true">
+              <use xlink:href="#icon-shengyin_shiti"></use>
+            </svg>
+          </div>
           <span>{{item.name}}</span>
           <span> - {{item.artist}}</span>
         </div>
@@ -70,16 +73,35 @@ export default {
   },
   computed:{
     ...mapState(['playList', 'mode', 'playState']),
-    ...mapGetters(['curSong']),
-    playListLen(){
-      return this.playList.length;
-    },
+    ...mapGetters([
+      'curSong',
+      'musicListLen']),
     modeText(){
       return ['列表循环', '单曲循环', '随机播放'][this.mode];
     }
   },
+  watch:{
+
+  },
   methods:{
-    ...mapMutations(['setPlayMode']),
+    ...mapMutations([
+      'setPlayMode', 
+      'setPlayIndex',
+      'setPlayList',
+      'setShowPlayList',
+      'setPlayState']),
+    _playMusicById(id){
+      if(this.curSong.id === id && this.playState) return; 
+      this.setPlayIndex(this.playList.findIndex(item => item.id === id));
+      // this.setPlayState(false);
+      this.setPlayState(true);
+    },
+    _clearPlayList(){
+      console.log('clear playList');
+      this.setPlayList([]);
+      this.setShowPlayList(false);
+      this.setPlayState(false);
+    }
   }
 };
 </script>
@@ -136,11 +158,15 @@ ul{
             white-space: nowrap;
             display: flex;
             align-items: center;
-            svg{
+            .song-icon{
+              min-width: 20px;
+              svg{
                 font-size: 16px;
                 padding-right: 3px;
                 color: #fa2800;
+              }
             }
+
         }
         span{
             &:first-of-type{

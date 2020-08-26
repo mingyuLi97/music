@@ -4,6 +4,7 @@
     <audio
       ref="audio"
       :src="curSong.mp3Url"
+      @ended="playNext"
     />
     <img :src="curSong.picUrl" alt="封面">
 
@@ -45,6 +46,7 @@
 <script>
 import {mapState, mapGetters, mapMutations} from 'vuex';
 import PopupPlayList from '@/components/PopupPlayList';
+import {playMode} from '@/model/playMode';
 export default {
   components:{
     PopupPlayList
@@ -56,16 +58,11 @@ export default {
     };
   },
   watch:{
-    playState: function(state, val){
-      if(state){
-        this._updateTime();
-        setTimeout(()=>{
-          this.$refs.audio.play();
-        },0);
-      }else{
-        this.$refs.audio.pause();
-        this.timer && clearInterval(this.timer);
-      }
+    playState(state){
+      this._onPlayStatusChange(state);
+    },
+    playIndex(){
+      this._onPlayStatusChange(this.playState);
     },
     volume(val){
       this.$refs.audio.volume = val / 100;
@@ -75,8 +72,17 @@ export default {
     }
   },
   computed:{
-    ...mapState(['playState', 'volume', 'forceTime', 'showPlayList']),
-    ...mapGetters(['curSong', 'curProgress']),
+    ...mapState([
+      'playState',
+      'volume',
+      'forceTime',
+      'showPlayList',
+      'playIndex',
+      'mode']),
+    ...mapGetters([
+      'curSong',
+      'curProgress',
+      'musicListLen']),
     show:{
       get(){
         return this.showPlayList;
@@ -87,7 +93,11 @@ export default {
     }
   },
   methods:{
-    ...mapMutations(['setPlayState', 'updateTime', 'setShowPlayList']),
+    ...mapMutations([
+      'setPlayState',
+      'updateTime',
+      'setShowPlayList',
+      'setPlayIndex']),
     toPlayPage(){
       console.log('toPlayPage');
       this.$router.push('/play');
@@ -97,13 +107,53 @@ export default {
       // this.show = true;
       this.setShowPlayList(true);
     },
+    _onPlayStatusChange(state){ // 当播放状态或者播放索引发生改变
+      if(state){
+        this._updateTime();
+        setTimeout(()=>{
+          console.log('Play status changed');
+          this.$refs.audio.play();
+        },0);
+      }else{
+        console.log('stop music');
+        this.$refs.audio.pause();
+        this.timer && clearInterval(this.timer);
+      }
+    },
     _updateTime(){
+      // 开启新定时器前先清除之前的，防止重复开启
+      this.timer && clearInterval(this.timer);
       this.timer = setInterval(()=>{
         this.updateTime({
           curTime: Math.floor(this.$refs.audio.currentTime),
           totalTime: Math.floor(this.$refs.audio.duration)
         });
-      }, 100);
+      }, 1000);
+    },
+    playNext(){
+      const _mode = this.mode,
+        _len = this.musicListLen,
+        _index = this.playIndex;
+      console.log('play next music');
+      if(_mode === playMode.singleCycle || _len === 1){
+        console.log('mode: singleCycle');
+        this.setPlayState(false);
+        setTimeout(()=>{
+          this.setPlayState(true);
+        },0);
+      }
+      else if(_mode === playMode.sequence){
+        console.log('mode: sequence');
+        this.setPlayIndex((_index + 1) % _len);
+      }
+      else if(_mode === playMode.random){
+        console.log('mode: random');
+        let randomIndex = parseInt(Math.random()*(this.musicListLen-1+1),10);
+        if(randomIndex === _index){
+          randomIndex = (_index + 1) % _len;
+        }
+        this.setPlayIndex(randomIndex);
+      }
     }
   }
 };

@@ -1,7 +1,10 @@
 <template>
   <div class="play-container">
     <back-bar>
-      play
+      <div class="cur-song-info">
+        <span>{{curSong.name}}</span>
+        <span>{{curSong.artist}}</span>
+      </div>
     </back-bar>
 
     <div class="play-wrap">
@@ -99,8 +102,18 @@ export default {
     };
   },
   computed:{
-    ...mapState(['playState', 'mode', 'volume', 'curTime', 'totalTime']),
-    ...mapGetters(['curSong', 'curProgress']),
+    ...mapState([
+      'playState',
+      'mode',
+      'volume',
+      'curTime',
+      'totalTime'
+    ]),
+    ...mapGetters([
+      'curSong',
+      'curProgress',
+      'musicListLen'
+    ]),
     volVal:{
       get(){
         return this.volume;
@@ -115,6 +128,10 @@ export default {
       },
       set(val){
         this.setForceTime(val / 100 * this.totalTime);
+        this.updateTime({
+          curTime: val / 100 * this.totalTime,
+          totalTime: this.totalTime
+        });
       }
     },
     totalTimeStr(){
@@ -124,8 +141,24 @@ export default {
       return this.getTimeStr(this.curTime);
     }
   },
+  watch:{
+    musicListLen:{
+      handler(len){
+        if(!len){
+          this.$router.go(-1);
+        }
+      },
+      immediate: true
+    }
+  },
   methods:{
-    ...mapMutations(['setPlayState', 'setPlayMode', 'setVolume', 'setForceTime', 'setShowPlayList']),
+    ...mapMutations(
+      ['setPlayState',
+        'setPlayMode',
+        'setVolume',
+        'setForceTime', 
+        'setShowPlayList',
+        'updateTime']),
     getTimeStr(time){
       const timeStr = utils.second2time(time);
       return timeStr.startsWith('00:') ? timeStr.substring(3) :timeStr;
@@ -139,6 +172,16 @@ export default {
   display: flex;
   flex-direction: column;
   height: 100vh;
+  .cur-song-info{
+    span{
+      display: block;
+      font-size: 18px;
+      &:last-of-type{
+        color: #999999;
+        font-size: 12px;
+      }
+    }
+  }
 }
 .play-wrap{
   flex: 1;

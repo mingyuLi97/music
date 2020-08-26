@@ -8,20 +8,28 @@
       <router-view v-if="$route.meta.isKeep"></router-view>
     </keep-alive>
     <router-view v-if="!$route.meta.isKeep"></router-view>
-    <play-bar class="play-bar" v-show="$route.meta.playBar"/>
+    <play-bar class="play-bar" v-show="showPlayBar"/>
   </div>
 </template>
 
 <script>
 import NavBar from '@/components/NavBar';
 import PlayBar from '@/components/PlayBar';
+import store from '@/store';
 export default {
   components: {
     NavBar,
     PlayBar
   },
   mounted(){
-    console.log(this.$route.meta);
+    // console.log(this.$route.meta);
+    // console.log(store.getters.musicListLen);
+  },
+  computed:{
+    showPlayBar(){
+      return !!store.getters.musicListLen
+       && this.$route.meta.playBar;
+    }
   }
 };
 </script>

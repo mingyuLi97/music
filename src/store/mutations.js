@@ -33,6 +33,7 @@ export default {
    * @method 设置播放状态
    */
   setPlayState(state, playState){
+    // console.log('设置playState', playState);
     state.playState = playState;
   },
   /**
