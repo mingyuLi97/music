@@ -24,7 +24,7 @@
           <span>{{modeText}}</span>
         </div>
         <!-- 收藏 -->
-        <div>
+        <div @click="_collectAll">
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-icon-"></use>
           </svg>
@@ -101,6 +101,12 @@ export default {
       this.setPlayList([]);
       this.setShowPlayList(false);
       this.setPlayState(false);
+    },
+    // 收藏全部歌曲
+    _collectAll(){
+      console.log('收藏全部歌曲');
+      const ids = this.playList.map(item => item.id);
+      console.log(ids.join(','));
     }
   }
 };
