@@ -55,7 +55,7 @@
         </div>
 
         <!--  上一曲 -->
-        <svg class="icon" aria-hidden="true">
+        <svg class="icon" aria-hidden="true" @click.stop="playNext(-1)">
           <use xlink:href="#icon-shangyiqu101"></use>
         </svg>
 
@@ -71,7 +71,7 @@
         </div>
 
         <!-- 下一曲 -->
-        <svg class="icon" aria-hidden="true">
+        <svg class="icon" aria-hidden="true" @click.stop="playNext(1)">
           <use xlink:href="#icon-xiayiqu101"></use>
         </svg>
 
@@ -87,7 +87,7 @@
 
 <script>
 import BackBar from '@/components/common/BackBar';
-import {mapState, mapGetters, mapMutations} from 'vuex';
+import {mapState, mapGetters, mapMutations, mapActions} from 'vuex';
 import {playMode} from '@/model/playMode';
 import utils from '@/utils';
 import playBar from '@/components/PlayBar';
@@ -127,6 +127,9 @@ export default {
         return this.curProgress;
       },
       set(val){
+        if(!this.playState){
+          this.setPlayState(true);
+        }
         this.setForceTime(val / 100 * this.totalTime);
         this.updateTime({
           curTime: val / 100 * this.totalTime,
@@ -152,13 +155,17 @@ export default {
     }
   },
   methods:{
-    ...mapMutations(
-      ['setPlayState',
-        'setPlayMode',
-        'setVolume',
-        'setForceTime', 
-        'setShowPlayList',
-        'updateTime']),
+    ...mapMutations([
+      'setPlayState',
+      'setPlayMode',
+      'setVolume',
+      'setForceTime', 
+      'setShowPlayList',
+      'updateTime'
+    ]),
+    ...mapActions([
+      'playNext'
+    ]),
     getTimeStr(time){
       const timeStr = utils.second2time(time);
       return timeStr.startsWith('00:') ? timeStr.substring(3) :timeStr;

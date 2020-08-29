@@ -54,7 +54,7 @@
           <span> - {{item.artist}}</span>
         </div>
 
-        <svg class="icon" aria-hidden="true">
+        <svg class="icon" aria-hidden="true" @click.stop="_removeItme(item.id)">
           <use xlink:href="#icon-Group-"></use>
         </svg>
 
@@ -65,14 +65,21 @@
 
 <script>
 import {mapState, mapGetters, mapMutations} from 'vuex';
-
+import { Dialog } from 'vant';
 export default {
+  components:{
+    // [Dialog.Component.name]: Dialog.Component,
+  },
   data() { 
     return {
     };
   },
   computed:{
-    ...mapState(['playList', 'mode', 'playState']),
+    ...mapState([
+      'playList',
+      'mode',
+      'playIndex',
+      'playState',]),
     ...mapGetters([
       'curSong',
       'musicListLen']),
@@ -98,9 +105,34 @@ export default {
     },
     _clearPlayList(){
       console.log('clear playList');
-      this.setPlayList([]);
-      this.setShowPlayList(false);
-      this.setPlayState(false);
+      Dialog.confirm({
+        // title: '标题',
+        message: '确定要清空播放列表',
+      })
+        .then(() => {
+          // on confirm
+          this.setPlayList([]);
+          this.setShowPlayList(false);
+          this.setPlayState(false);
+        })
+        .catch(() => {
+          // on cancel
+        });
+
+    },
+    _removeItme(id){
+      const index =  this.playList.findIndex(item => item.id === id);
+      console.log('remove playlist index', index, 'playindex', this.playIndex);
+
+      if(this.playIndex === index){
+        console.log();
+      }
+      else if(this.playIndex < index){
+        this.playList.splice(index, 1);
+      }else{
+        this.playList.splice(index, 1);
+        this.setPlayIndex(this.playIndex - 1);
+      }
     },
     // 收藏全部歌曲
     _collectAll(){

@@ -4,7 +4,7 @@
     <audio
       ref="audio"
       :src="curSong.mp3Url"
-      @ended="playNext"
+      @ended="playNext(0)"
     />
     <img :src="curSong.picUrl" alt="封面">
 
@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import {mapState, mapGetters, mapMutations} from 'vuex';
+import {mapState, mapGetters, mapMutations, mapActions} from 'vuex';
 import PopupPlayList from '@/components/PopupPlayList';
 import {playMode} from '@/model/playMode';
 export default {
@@ -61,7 +61,7 @@ export default {
     playState(state){
       this._onPlayStatusChange(state);
     },
-    playIndex(){
+    curSong(){
       this._onPlayStatusChange(this.playState);
     },
     volume(val){
@@ -97,7 +97,11 @@ export default {
       'setPlayState',
       'updateTime',
       'setShowPlayList',
-      'setPlayIndex']),
+      'setPlayIndex'
+    ]),
+    ...mapActions([
+      'playNext'
+    ]),
     toPlayPage(){
       console.log('toPlayPage');
       this.$router.push('/play');
@@ -130,31 +134,31 @@ export default {
         });
       }, 1000);
     },
-    playNext(){
-      const _mode = this.mode,
-        _len = this.musicListLen,
-        _index = this.playIndex;
-      console.log('play next music');
-      if(_mode === playMode.singleCycle || _len === 1){
-        console.log('mode: singleCycle');
-        this.setPlayState(false);
-        setTimeout(()=>{
-          this.setPlayState(true);
-        },0);
-      }
-      else if(_mode === playMode.sequence){
-        console.log('mode: sequence');
-        this.setPlayIndex((_index + 1) % _len);
-      }
-      else if(_mode === playMode.random){
-        console.log('mode: random');
-        let randomIndex = parseInt(Math.random()*(this.musicListLen-1+1),10);
-        if(randomIndex === _index){
-          randomIndex = (_index + 1) % _len;
-        }
-        this.setPlayIndex(randomIndex);
-      }
-    }
+    // playNext(){
+    // const _mode = this.mode,
+    //   _len = this.musicListLen,
+    //   _index = this.playIndex;
+    // console.log('play next music');
+    // if(_mode === playMode.singleCycle || _len === 1){
+    //   console.log('mode: singleCycle');
+    //   this.setPlayState(false);
+    //   setTimeout(()=>{
+    //     this.setPlayState(true);
+    //   },0);
+    // }
+    // else if(_mode === playMode.sequence){
+    //   console.log('mode: sequence');
+    //   this.setPlayIndex((_index + 1) % _len);
+    // }
+    // else if(_mode === playMode.random){
+    //   console.log('mode: random');
+    //   let randomIndex = parseInt(Math.random()*(this.musicListLen-1+1),10);
+    //   if(randomIndex === _index){
+    //     randomIndex = (_index + 1) % _len;
+    //   }
+    //   this.setPlayIndex(randomIndex);
+    // }
+    // }
   }
 };
 </script>
