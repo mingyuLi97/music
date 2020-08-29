@@ -67,13 +67,6 @@
 import {mapState, mapGetters, mapMutations} from 'vuex';
 import { Dialog } from 'vant';
 export default {
-  components:{
-    // [Dialog.Component.name]: Dialog.Component,
-  },
-  data() { 
-    return {
-    };
-  },
   computed:{
     ...mapState([
       'playList',
@@ -87,9 +80,6 @@ export default {
       return ['列表循环', '单曲循环', '随机播放'][this.mode];
     }
   },
-  watch:{
-
-  },
   methods:{
     ...mapMutations([
       'setPlayMode', 
@@ -100,7 +90,6 @@ export default {
     _playMusicById(id){
       if(this.curSong.id === id && this.playState) return; 
       this.setPlayIndex(this.playList.findIndex(item => item.id === id));
-      // this.setPlayState(false);
       this.setPlayState(true);
     },
     _clearPlayList(){
@@ -124,15 +113,8 @@ export default {
       const index =  this.playList.findIndex(item => item.id === id);
       console.log('remove playlist index', index, 'playindex', this.playIndex);
 
-      if(this.playIndex === index){
-        console.log();
-      }
-      else if(this.playIndex < index){
-        this.playList.splice(index, 1);
-      }else{
-        this.playList.splice(index, 1);
-        this.setPlayIndex(this.playIndex - 1);
-      }
+      this.playList.splice(index, 1);
+      this.playIndex > index && this.setPlayIndex(this.playIndex - 1);
     },
     // 收藏全部歌曲
     _collectAll(){

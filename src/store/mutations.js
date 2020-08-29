@@ -1,3 +1,6 @@
+import utils from '@/utils';
+
+
 export default {
   /**
    * @method 设置登录状态 
@@ -27,7 +30,7 @@ export default {
    * @method 设置播放列表
    */
   setPlayList(state, playList){
-    state.playList = playList;
+    state.playList = utils.deepCopy(playList);
   },
   /**
    * @method 设置播放状态
