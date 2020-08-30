@@ -22,7 +22,13 @@
 
       <!--  歌词-->
       <div class="lyric">
-
+        <div :style="{marginTop: currentLineNum > 10 ? `${-25 * (currentLineNum-10)}px` : '0'}">
+          <p
+            v-for="(line,index) in lyricLines"
+            :key="index"
+            :class="{'current-line':currentLineNum===index}"
+            class="text">{{line.txt}}</p>  
+        </div>
       </div>
 
       <!--  歌曲进度 -->
@@ -90,15 +96,29 @@ import BackBar from '@/components/common/BackBar';
 import {mapState, mapGetters, mapMutations, mapActions} from 'vuex';
 import {playMode} from '@/model/playMode';
 import utils from '@/utils';
-import playBar from '@/components/PlayBar';
+import bus from '@/assets/js/eventBus';
 
 export default {
   components:{
     BackBar
   },
+  mounted(){
+    bus.$on('lyricLines', lyricLines => {
+      console.log('recive _sendLyricLinesToPlayPage');
+      this.lyricLines = lyricLines;
+    });
+
+    bus.$on('updateLineNum', lineNum => {
+      console.log('updateLineNum', lineNum);
+      this.currentLineNum = lineNum;
+    });
+
+    bus.$emit('updateLyric');
+  },
   data() { 
     return {
-      // volVal: 0
+      lyricLines: [],
+      currentLineNum: 0
     };
   },
   computed:{
@@ -210,8 +230,19 @@ export default {
   }
 
   .lyric{
-    flex: 1;
-    background-color: pink;
+    overflow: scroll;
+    height: 124.8vw;
+
+    .text{
+      color: #4a4a4a;
+      font-size: 14px;
+      line-height: 20px;
+      margin: 5px 0;
+      text-align: center;
+    }
+    .current-line{
+      color: #fa2800;
+    }
   }
 
   .progress-bar{

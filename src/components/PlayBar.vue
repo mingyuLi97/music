@@ -10,7 +10,7 @@
 
     <div class="content">
       <span>{{curSong.name}}</span>
-      <span>喜欢你是我独家的记忆</span>
+      <span>{{curTxt}}</span>
     </div>
 
     <div class="control" @click.stop="setPlayState(!playState)">
@@ -47,22 +47,40 @@
 import {mapState, mapGetters, mapMutations, mapActions} from 'vuex';
 import PopupPlayList from '@/components/PopupPlayList';
 import {playMode} from '@/model/playMode';
+import Lyric from 'lyric-parser';
+import bus from '@/assets/js/eventBus';
+
 export default {
   components:{
     PopupPlayList
   },
+  mounted(){
+    bus.$on('updateLyric', this._sendLyricLinesToPlayPage);
+  },
   data() { 
     return {
       currentRate: 0,
-      timer: null
+      timer: null,
+      currentLyric: null,
+      currentLineNum: 0,
+      curTxt:'',  // 当前正在播放的歌词
     };
   },
   watch:{
     playState(state){
       this._onPlayStatusChange(state);
+      this.currentLyric.togglePlay();
     },
     curSong(){
       this._onPlayStatusChange(this.playState);
+      // 切换歌曲时将进度调整为初始状态
+      this.updateTime({
+        curTime: 0,
+        totalTime: 0.1
+      });
+      // 上一首歌词停止播放
+      this.currentLyric && this.currentLyric.stop();
+      this._getLyric();
     },
     volume(val){
       this.$refs.audio.volume = val / 100;
@@ -108,16 +126,15 @@ export default {
     },
     showMenu(){
       console.log('showMenu');
-      // this.show = true;
       this.setShowPlayList(true);
     },
     _onPlayStatusChange(state){ // 当播放状态或者播放索引发生改变
       if(state){
-        this._updateTime();
-        setTimeout(()=>{
-          console.log('Play status changed');
+        console.log('play music');
+        this.$nextTick(()=>{
           this.$refs.audio.play();
-        },0);
+          this._updateTime();
+        });
       }else{
         console.log('stop music');
         this.$refs.audio.pause();
@@ -128,37 +145,38 @@ export default {
       // 开启新定时器前先清除之前的，防止重复开启
       this.timer && clearInterval(this.timer);
       this.timer = setInterval(()=>{
+        const currentTime = this.$refs.audio.currentTime;
         this.updateTime({
-          curTime: Math.floor(this.$refs.audio.currentTime),
+          curTime: Math.floor(currentTime),
           totalTime: Math.floor(this.$refs.audio.duration)
         });
+        this.currentLyric && this.currentLyric.seek(currentTime * 1000);
       }, 1000);
     },
-    // playNext(){
-    // const _mode = this.mode,
-    //   _len = this.musicListLen,
-    //   _index = this.playIndex;
-    // console.log('play next music');
-    // if(_mode === playMode.singleCycle || _len === 1){
-    //   console.log('mode: singleCycle');
-    //   this.setPlayState(false);
-    //   setTimeout(()=>{
-    //     this.setPlayState(true);
-    //   },0);
-    // }
-    // else if(_mode === playMode.sequence){
-    //   console.log('mode: sequence');
-    //   this.setPlayIndex((_index + 1) % _len);
-    // }
-    // else if(_mode === playMode.random){
-    //   console.log('mode: random');
-    //   let randomIndex = parseInt(Math.random()*(this.musicListLen-1+1),10);
-    //   if(randomIndex === _index){
-    //     randomIndex = (_index + 1) % _len;
-    //   }
-    //   this.setPlayIndex(randomIndex);
-    // }
-    // }
+    //---------------------- 处理歌词 ------------------------------
+    async _getLyric(){
+      let res = await this.$api.getLyric(this.curSong.id);
+      console.log('lyric:', res);
+      if(res.code === 200){
+        let lyric = res.lrc.lyric;
+        this.currentLyric = new Lyric(lyric, this._handleLyric);
+        this._sendLyricLinesToPlayPage();
+      }
+    },
+    _handleLyric({lineNum, txt}){
+      this.currentLineNum = lineNum;
+      this.curTxt = txt;
+      bus.$emit('updateLineNum', lineNum); 
+    },
+    /**
+     * @method 获取歌曲发送到play组件
+     */
+    _sendLyricLinesToPlayPage(){
+      console.log('_sendLyricLinesToPlayPage');
+      const curLyc = this.currentLyric,
+        lines = curLyc ? curLyc.lines : [];
+      bus.$emit('lyricLines', lines);
+    }
   }
 };
 </script>

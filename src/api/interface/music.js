@@ -15,6 +15,18 @@ const getSongDetail = (ids, time) =>{
 };
 
 /**
+ * 
+ * @method 获取当前播放歌曲的歌词
+ * @param {number} id 歌曲id
+ */
+
+const getLyric = id => {
+  return axios({
+    url: `/lyric?id=${id}`
+  });
+};
+
+/**
  * @method 对歌单添加或删除歌曲
  * @param {String} op 从歌单增加单曲为 add, 删除为 del
  * @param {Number} pid 歌单 id
@@ -35,5 +47,6 @@ const updateSongList = (op, pid, tracks) =>{
 
 export default {
   getSongDetail,
-  updateSongList
+  updateSongList,
+  getLyric
 };
