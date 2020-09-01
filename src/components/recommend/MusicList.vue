@@ -57,7 +57,7 @@ export default {
           console.log(res);
           this.musicArr = res.result
             .slice(0, 9).map(item => {
-              return new Song(item);
+              return new Song(item.song);
             });
           console.log(this.musicArr);
           // 初始化 vuex 临时代替
