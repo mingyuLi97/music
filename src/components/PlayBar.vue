@@ -132,7 +132,19 @@ export default {
       if(state){
         console.log('play music');
         this.$nextTick(()=>{
-          this.$refs.audio.play();
+          const promise = this.$refs.audio.play();
+          if(promise !== undefined){
+            promise
+              .then(_ => {})
+              .catch(err => {
+                console.log('音乐资源错误');
+                this.$toast.fail('音乐资源错误');
+                setTimeout(_ => {
+                  this.playNext(1);
+                },1000);
+              });
+          }
+
           this._updateTime();
         });
       }else{
