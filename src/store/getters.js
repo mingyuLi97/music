@@ -1,4 +1,11 @@
 export default {
+  userInfo(state){
+    return state.userInfo || JSON.parse(window.localStorage.getItem('userInfo'));
+  },
+  loginStatus(state){
+    state.loginStatus || JSON.parse(window.localStorage.getItem('loginStatus'));
+
+  },
   curSong(state){
     return state.playList[state.playIndex] || {};
   },
