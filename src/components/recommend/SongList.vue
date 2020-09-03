@@ -1,6 +1,10 @@
 <template>
   <div class="song-list-wrap">
-    <recommend-head title="人气歌单推荐" text="查看更多"/>
+    <recommend-head
+      title="人气歌单推荐"
+      text="查看更多"
+      @switch="$router.push('/songList')"/>
+
     <div class="song-list">
       <cover
         v-for="item in songArr"

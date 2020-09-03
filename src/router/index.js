@@ -35,7 +35,11 @@ const routes = [
   {
     path: '/songList',
     name: 'songList',
-    component: () => import(/* webpackChunkName: "about" */ '@/views/SongList.vue')
+    component: () => import(/* webpackChunkName: "about" */ '@/views/SongList.vue'),
+    meta:{
+      navBar: true,
+      playBar: true
+    }
   },
   {
     path: '/user',
@@ -51,7 +55,7 @@ const routes = [
     name: 'rank',
     component: () => import(/* webpackChunkName: "about" */ '@/views/Rank.vue'),
     meta:{
-      navBar: false,
+      navBar: true,
       playBar: true
     }
   },

@@ -9,7 +9,7 @@
         <li
           v-for="item in categoryArr"
           :key="item.id"
-          :class="{'activate': activateIndex === item.id}"
+          :class="{'activate': activateName === item.name}"
           @click="changeCategory(item)"
         >
           {{item.text}}
@@ -49,7 +49,6 @@ export default {
   data() { 
     return {
       categoryArr: CATEGORY_ARR.map(item => Object.freeze(item)),
-      activateIndex: null
     };
   },
   mounted(){
@@ -57,9 +56,13 @@ export default {
     const item = this.categoryArr[1];
     this.changeCategory(item);
   },
+  computed:{
+    activateName(){
+      return this.$route.name;
+    }
+  },
   methods:{
     changeCategory(item){
-      this.activateIndex = item.id;
       this.$router.push({name: item.name});
     }
   }

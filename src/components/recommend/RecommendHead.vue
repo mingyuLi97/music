@@ -2,7 +2,7 @@
   <div>
     <div class="header">
       <h2>{{title}}</h2>
-      <span>{{text}}</span>
+      <span @click="$emit('switch')">{{text}}</span>
     </div>
   </div>
 </template>
