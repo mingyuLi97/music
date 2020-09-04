@@ -8,7 +8,9 @@
       <router-view v-if="$route.meta.isKeep"></router-view>
     </keep-alive>
     <router-view v-if="!$route.meta.isKeep"></router-view>
-    <play-bar class="play-bar" v-show="showPlayBar"/>
+    <div class="container" v-show="showPlayBar">
+      <play-bar class="play-bar" />
+    </div>
   </div>
 </template>
 
