@@ -52,6 +52,7 @@
       </div>
 
       <ul class="list">
+        <van-loading color="#1989fa" v-if="!recordList"/>
         <li
           v-for="(music,index) in recordList"
           :key="index"
@@ -71,8 +72,6 @@
         </li>
       </ul>
     </div>
-
-
   </div>
 </template>
 
@@ -163,26 +162,26 @@ export default {
 
 <style lang='scss' scoped>
 .user-wrap{
-  margin-bottom: 60px;
+  margin-bottom: 2.667vw;
 }
 
 .userInfo{
   box-sizing: border-box;
-  border-radius: 5px;
+  border-radius: 1.333vw;
   overflow: hidden;
   .bg{
     background-image: url('../assets/images/userInfoBg.jpeg');
-    height: 180px;
+    height: 48vw;
   }
   .part1{
     display: flex;
     align-items: center;
-    margin-top: -58px;
+    margin-top: -15.467vw;
     img{
-      width: 80px;
-      border-radius: 5px;
-      border: .5px solid #cccccc;
-      margin: 0 10px 0 20px;
+      width: 21.333vw;
+      border-radius: 1.333vw;
+      border: 0.133vw solid #cccccc;
+      margin: 0 2.667vw 0 5.333vw;
     }
     span{
       color: #ffffff;
@@ -190,16 +189,16 @@ export default {
   }
 
   .part2{
-    padding: 10px 20px 0 20px;
+    padding: 2.667vw 5.333vw 0 5.333vw;
     display: flex;
     justify-content: space-between;
     li{
-      margin: 5px 0;
+      margin: 1.333vw 0;
       &:first-of-type{
         span{
           color: #fa2800;
-          margin-left: -6px;
-          font-size: 12px;
+          margin-left: -1.6vw;
+          font-size: 3.2vw;
         }
       }
     }
@@ -208,7 +207,7 @@ export default {
   .part3{
     display: flex;
     justify-content: space-around;
-    margin: 20px 0;
+    margin: 5.333vw 0;
     span{
       display: block;
       text-align: center;
@@ -219,36 +218,32 @@ export default {
 }
 
 .music-rank{
-  margin: 0 10px;
-  border: 0.3px solid #cccccc;
-  padding-top: 20px;
-  border-radius: 5px;
+  margin: 0 2.667vw;
+  border-radius: 1.333vw;
   .head{
     display: flex;
     justify-content: space-between;
-    padding: 0 20px;
+    padding: 0 5.333vw;
     .active{
       font-weight: bold;
     }
     span{
-      font-size: 14px;
+      font-size: 3.733vw;
     }
     &>span{
-      border-left: 5px solid #fa2800;
-      padding-left: 10px;
-      font-size: 16px;
+      border-left: 1.333vw solid #fa2800;
+      padding-left: 2.667vw;
+      font-size: 4.267vw;
     }
   }
 
   .list{
-    margin-top: 15px;
-    height: 400px;
-    overflow: scroll;
+    margin-top: 4vw;
     li{
-      padding: 5px 20px;
+      padding: 1.333vw 5.333vw;
       display: flex;
       align-items: center;
-      font-size: 14px;
+      font-size: 3.733vw;
       &:nth-child(odd){
         background-color: #f7f7f7;
       }
@@ -256,17 +251,17 @@ export default {
         background-color: #f7f7f7;
       }
       svg{
-        padding: 0 4px;
+        padding: 0 1.067vw;
       }
       span:nth-of-type(2){
         flex: 1;
-        padding-left: 10px;
+        padding-left: 2.667vw;
         overflow: hidden;
         text-overflow:ellipsis;
         white-space: nowrap;
       }
       span:nth-of-type(3){
-        padding-right: 20px;
+        padding-right: 5.333vw;
       }
     }
   }

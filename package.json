@@ -70,5 +70,19 @@
     "> 1%",
     "last 2 versions",
     "not dead"
-  ]
+  ],
+  "vue":{
+    "devServer":{
+      "proxy":{
+        "/api": {
+          "target": "http://121.40.162.237:8002/",
+          "changeOrigin": true,
+          "ws": true,
+          "pathRewrite": {
+            "^/api": ""
+          }
+        }
+      }
+    }
+  }
 }
