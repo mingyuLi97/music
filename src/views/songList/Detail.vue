@@ -1,5 +1,13 @@
 <template>
   <div v-if="data" class="detail-wrap">
+    <describe
+      v-if="showDescribe"
+      class="describe-wrap"
+      @close="showDescribe=false"
+      :url='data.coverImgUrl'
+      :name='data.name'
+      :desc="data.description"
+      :tags='data.tags'/>
     <div>
       <back-bar>歌单</back-bar>
 
@@ -16,10 +24,7 @@
             <img :src="data.creator.avatarUrl" alt="avatar">
             <span>{{data.creator.nickname}}</span>
           </div>
-          <!-- <ul class="tags">
-            <li v-for="(tag, index) in data.tags" :key="index">{{tag}}</li>
-          </ul> -->
-          <p>{{data.description}}</p>
+          <p @click="showDescribe = true">{{data.description}}</p>
         </div>
       </div>
       <songlist-tool-bar
@@ -55,6 +60,7 @@ import Cover from '@/components/common/Cover';
 import SonglistToolBar from '@/components/common/SongListToolBar';
 import Song from '@/model/song';
 import MusicItem from '@/components/common/MusicItem';
+import Describe from './Describe';
 import { playMode } from '@/model/playMode';
 import { mapMutations } from 'vuex';
 
@@ -63,7 +69,8 @@ export default {
     BackBar,
     Cover,
     SonglistToolBar,
-    MusicItem
+    MusicItem,
+    Describe
   },
   mounted(){
     console.log(this.$route.params.id);
@@ -83,7 +90,8 @@ export default {
   },
   data() { 
     return {
-      data: null
+      data: null,
+      showDescribe: false
     };
   },
   methods:{
@@ -110,6 +118,15 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+.describe-wrap{
+    position: fixed;
+    z-index: 1111;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    box-sizing: border-box;
+}
+
 .detail-wrap{
     box-sizing: border-box;
 }

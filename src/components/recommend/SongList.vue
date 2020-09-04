@@ -13,6 +13,7 @@
         :count='item.playCount'
         :url='item.picUrl'
         class="song-item"
+        @click.native="$router.push(`/songList/${item.id}`)"
       />
     </div>
 

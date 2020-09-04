@@ -38,7 +38,8 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '@/views/songList/SongList.vue'),
     meta:{
       navBar: true,
-      playBar: true
+      playBar: true,
+      isKeep: true
     }
   },
   {
