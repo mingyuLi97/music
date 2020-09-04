@@ -6,7 +6,7 @@
         :key="index"
         :title="catName">
         
-        <div class="cover-list" @scroll="handleScroll" :style="{height:coverListHeight}">
+        <div class="cover-list" @scroll="handleScroll">
           <cover
             v-for="(item, index) in curSonglist"
             :key="index"
@@ -14,6 +14,7 @@
             :url='item.coverImgUrl'
             :name='item.name'
             class="cover-item"
+            @click.native="toDetailPage(item.id)"
           />
           <div class="list-tip">{{listTip}}</div>
         </div>
@@ -118,6 +119,10 @@ export default {
         this.offset++;
         this._getPlaylistByCat();
       }
+    },
+    toDetailPage(id){
+      console.log('showDetail');
+      this.$router.push(`/songList/${id}`);
     }
   }
 };
@@ -128,6 +133,7 @@ export default {
 .cover-list {
   overflow: scroll;
   padding: 0 2vw;
+  height: 154.133vw;
   .cover-item{
     display: inline-block;
     width: 29.333vw;

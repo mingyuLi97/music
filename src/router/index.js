@@ -35,9 +35,18 @@ const routes = [
   {
     path: '/songList',
     name: 'songList',
-    component: () => import(/* webpackChunkName: "about" */ '@/views/SongList.vue'),
+    component: () => import(/* webpackChunkName: "about" */ '@/views/songList/SongList.vue'),
     meta:{
       navBar: true,
+      playBar: true
+    }
+  },
+  {
+    path: '/songList/:id',
+    name: 'songListDetail',
+    component: () => import(/* webpackChunkName: "about" */ '@/views/songList/Detail.vue'),
+    meta:{
+      navBar: false,
       playBar: true
     }
   },

@@ -33,8 +33,18 @@ const getPlaylistByCat = (cat='全部', limit=50, offset=0, order='hot') =>{
   });
 };
 
+/**
+ * @method 获取歌单详情
+ */
+const getPlaylistDetail = id => {
+  return axios({
+    url: `/playlist/detail?id=${id}`
+  });
+};
+
 export default {
   getCatList,
   getHotCatList,
-  getPlaylistByCat
+  getPlaylistByCat,
+  getPlaylistDetail
 };
