@@ -1,6 +1,7 @@
 <template>
   <div v-if="data" class="music-item-wrap" @click="toPlayPage">
-    <img :src="data.picUrl" alt="">
+    <img :src="data.picUrl" alt="" v-if="!index">
+    <span v-else class="index">{{index}}</span>
     <div class="content">
       <span>{{data.name}}</span>
       <span>{{data.artist}}</span>
@@ -28,7 +29,7 @@
 import { mapGetters} from 'vuex';
 
 export default {
-  props:['data'],
+  props:['data', 'index'],
   computed:{
     ...mapGetters(['curSong']),
     isPlay(){
@@ -68,6 +69,10 @@ export default {
     width: 14.667vw;
     border-radius: 1.067vw;
     border: 0.267vw solid #cccccc;
+  }
+  .index{
+    margin-right: 10px;
+    font-size: 20px;
   }
   .content{
     span{

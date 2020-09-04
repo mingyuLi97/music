@@ -109,7 +109,7 @@ export default {
     });
 
     bus.$on('updateLineNum', lineNum => {
-      console.log('updateLineNum', lineNum);
+      // console.log('updateLineNum', lineNum);
       this.currentLineNum = lineNum;
     });
 

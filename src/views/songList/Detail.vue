@@ -26,6 +26,25 @@
         :commentCount='data.commentCount'
         :shareCount='data.shareCount'
       />
+
+      <div class="songlist">
+        <music-item
+          v-for="(item, index) in musicArr"
+          :key="item.id"
+          :data="item"
+          :index='index + 1'
+          @play="playMusic(item.id)"
+        />
+        <div class="subscribers">
+          <img
+            v-for="(subscriber, index) in subscriberArr"
+            :key="index"
+            :src="subscriber.avatarUrl" alt="">
+          <span>
+            {{subscribeCount}}
+          </span>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -34,15 +53,33 @@
 import BackBar from '@/components/common/BackBar';
 import Cover from '@/components/common/Cover';
 import SonglistToolBar from '@/components/common/SongListToolBar';
+import Song from '@/model/song';
+import MusicItem from '@/components/common/MusicItem';
+import { playMode } from '@/model/playMode';
+import { mapMutations } from 'vuex';
+
 export default {
   components:{
     BackBar,
     Cover,
-    SonglistToolBar
+    SonglistToolBar,
+    MusicItem
   },
   mounted(){
     console.log(this.$route.params.id);
     this._getPlaylistDetail(this.$route.params.id);
+  },
+  computed:{
+    musicArr(){
+      return this.data.tracks.map(item => new Song(item));
+    },
+    subscriberArr(){
+      return this.data.subscribers.slice(0, 5);
+    },
+    subscribeCount(){
+      const count = this.data.subscribedCount || 0;
+      return this.utils.transformNumber(count) + '人收藏';
+    }
   },
   data() { 
     return {
@@ -50,11 +87,24 @@ export default {
     };
   },
   methods:{
+    ...mapMutations([
+      'setPlayMode',
+      'setPlayIndex',
+      'setPlayList',
+      'setPlayState'
+    ]),
     async _getPlaylistDetail(id){
       const res = await this.$api.getPlaylistDetail(id);
       console.log(res);
       this.data = res.playlist;
-    }
+    },
+    playMusic(id){
+      console.log('playMusic');
+      this.setPlayMode(playMode.sequence);
+      this.setPlayList(this.musicArr);
+      this.setPlayIndex(this.musicArr.findIndex(item => item.id === id));
+      this.setPlayState(true);
+    },
   }
 };
 </script>
@@ -110,6 +160,25 @@ export default {
             border-top: 0.267vw solid #999999;
             transform: rotate(45deg);
             content: '';
+        }
+    }
+}
+
+.songlist{
+    margin:0 10px 0 20px;
+    .subscribers{
+        img {
+            width: 30px;
+            border-radius: 50%;
+            border: .1px solid #cccccc;
+            margin: 10px 5px;
+        }
+        span{
+            line-height: 50px;
+            padding-right: 10px;
+            float: right;
+            font-size: 14px;
+            color: #999999;
         }
     }
 }

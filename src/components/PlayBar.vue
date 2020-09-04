@@ -69,7 +69,7 @@ export default {
   watch:{
     playState(state){
       this._onPlayStatusChange(state);
-      this.currentLyric.togglePlay();
+      this.currentLyric && this.currentLyric.togglePlay();
     },
     curSong(){
       this._onPlayStatusChange(this.playState);
