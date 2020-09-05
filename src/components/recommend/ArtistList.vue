@@ -1,6 +1,10 @@
 <template>
   <div class="artist-list-wrap">
-    <recommend-head title="热门歌手" text="全部歌手"/>
+    <recommend-head
+      title="热门歌手"
+      text="全部歌手"
+      @switch="$router.push('/artist')"
+    />
     <div class="artist-container">
       <div
         class="artist"

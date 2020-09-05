@@ -1,6 +1,10 @@
 <template>
   <div class="music-list-wrap">
-    <recommend-head title="新歌风向标" text="更多新歌"/>
+    <recommend-head
+      title="新歌风向标"
+      text="更多新歌"
+      @switch="$router.push('/songList/3779629')"
+    />
     <div class="group-container">
       <div class="music-group" v-for="(group, index) in musicGroup" :key="index">
         <music-item
