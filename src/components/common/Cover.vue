@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="cover-wrap">
-      <div>
+      <div v-if="count">
         <svg class="icon" aria-hidden="true">
           <use xlink:href="#icon-bofangsanjiaoxing"></use>
         </svg>
@@ -25,7 +25,7 @@ export default {
   },
   computed:{
     count2str(){
-      return this.utils.transformNumber(this.count);
+      return this.utils.transformNumber(this.count || 0);
     }
   }
 };

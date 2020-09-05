@@ -70,6 +70,24 @@ const routes = [
     }
   },
   {
+    path: '/artist',
+    name: 'artist',
+    component: () => import(/* webpackChunkName: "about" */ '@/views/artist/ArtistList.vue'),
+    meta:{
+      navBar: false,
+      playBar: true
+    }
+  },
+  {
+    path: '/artist/:id',
+    name: 'artistDetail',
+    component: () => import(/* webpackChunkName: "about" */ '@/views/artist/ArtistDetail.vue'),
+    meta:{
+      navBar: true,
+      playBar: true
+    }
+  },
+  {
     path: '/recommend',
     name: 'recommend',
     component: () => import(/* webpackChunkName: "about" */ '@/views/Recommend.vue'),
