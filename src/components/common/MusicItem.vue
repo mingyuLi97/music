@@ -1,6 +1,6 @@
 <template>
   <div v-if="data" class="music-item-wrap" @click="toPlayPage">
-    <img :src="data.picUrl" alt="" v-if="!index">
+    <img v-lazy="data.picUrl" alt="" v-if="!index">
     <span v-else class="index">{{index}}</span>
     <div class="content">
       <span>{{data.name}}</span>

@@ -9,7 +9,7 @@
           {{count2str}}
         </span>
       </div>
-      <img :src="url" alt="">
+      <img v-lazy="url" alt="">
       <p>{{name}}</p>
     </div>
   </div>

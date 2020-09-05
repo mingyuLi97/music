@@ -44,7 +44,7 @@
           <img
             v-for="(subscriber, index) in subscriberArr"
             :key="index"
-            :src="subscriber.avatarUrl" alt="">
+            v-lazy="subscriber.avatarUrl" alt="">
           <span>
             {{subscribeCount}}
           </span>

@@ -12,7 +12,7 @@
         :key="item.id"
       >
         <div
-          :style="`background-image: url(${item.picUrl})`"
+          v-lazy:background-image="item.picUrl"
         />
         <span>{{item.name}}</span>
         <span>单曲数{{item.musicSize}}</span>

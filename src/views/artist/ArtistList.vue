@@ -11,7 +11,7 @@
       >
         <div class="artist-item" v-for="(item, indexNum) in curArtists" :key="indexNum">
           <rank-num :cur-rank="indexNum" :last-rank='item.lastRank'></rank-num>
-          <img :src="item.img1v1Url" alt="">
+          <img v-lazy="item.img1v1Url" alt="">
           <div class="info">
             <span>{{item.name}}</span>
             <div class="hot">
