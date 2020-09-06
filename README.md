@@ -2,6 +2,8 @@
 
 ## 仿网易云音乐移动端
 
+[clone 慢建议使用码云-gitee](https://gitee.com/limy97/music)
+
 > 此项目仅供学习和交流
 
 ### 在线演示
@@ -60,4 +62,6 @@ npm run serve
 ## 感谢
 
 [网易云后台-NeteaseCloudMusicApi](https://github.com/Binaryify/NeteaseCloudMusicApi)
+
+[歌词解析 lyric-parser](https://github.com/Palereed/lyric-parser)
 
