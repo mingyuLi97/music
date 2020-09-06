@@ -2,6 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
 import store from '@/store';
+import { Toast } from 'vant';
 
 const originalPush = VueRouter.prototype.push;
 VueRouter.prototype.push = function push(location) {
@@ -117,6 +118,14 @@ router.beforeEach((to, from, next) => {
   // console.log(to);
   // 当路由切换关闭播放列表
   store.commit('setShowPlayList', false);
+  // console.log();
+  if(to.path === '/user' && !store.getters.loginStatus){
+    Toast.fail('请先登录');
+    setTimeout(()=>{
+      next('/login');
+    }, 1000);
+    return;
+  }
   next();
 });
 
