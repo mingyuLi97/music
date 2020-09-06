@@ -196,33 +196,33 @@ export default {
 <style lang='scss' scoped>
 .play-bar-wrap{
     display: flex;
-    height: 50px;
+    height: 13.333vw;
     box-sizing: border-box;
-    border-top: .5px solid #cccccc;
+    border-top: 0.133vw solid #cccccc;
     align-items: center;
-    padding: 0 10px;
+    padding: 0 2.667vw;
     img{
-        width: 35px;
-        height: 35px;
+        width: 9.333vw;
+        height: 9.333vw;
         display: block;
         background-color: red;
         border-radius: 50%;
     }
     .content{
         flex: 1;
-        padding-left: 10px;
-        width: 200px;
-        margin-right: 20px;
+        padding-left: 2.667vw;
+        width: 53.333vw;
+        margin-right: 5.333vw;
         span{
             display: block;
             overflow: hidden;
             text-overflow:ellipsis;
             white-space: nowrap;
             &:first-of-type{
-                font-size: 14px;
+                font-size: 3.733vw;
             }
             &:last-of-type{
-                font-size: 12px;
+                font-size: 3.2vw;
                 color: #999999;
             }
         }
@@ -236,19 +236,19 @@ export default {
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 20px;
+            font-size: 5.333vw;
         }
     }
     .menu{
-        font-size: 30px;
+        font-size: 8vw;
         color: #4a4a4a;
         font-weight: 200;
-        padding-left: 20px;
+        padding-left: 5.333vw;
     }
 }
 
 .popup-play-list{
-  // padding: 20px;
+  // padding: 5.333vw;
   height: 60%;
 }
 </style>

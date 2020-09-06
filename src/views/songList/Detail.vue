@@ -182,19 +182,19 @@ export default {
 }
 
 .songlist{
-    margin:0 10px 0 20px;
+    margin:0 2.667vw 0 5.333vw;
     .subscribers{
         img {
-            width: 30px;
+            width: 8vw;
             border-radius: 50%;
-            border: .1px solid #cccccc;
-            margin: 10px 5px;
+            border: 0.027vw solid #cccccc;
+            margin: 2.667vw 1.333vw;
         }
         span{
-            line-height: 50px;
-            padding-right: 10px;
+            line-height: 13.333vw;
+            padding-right: 2.667vw;
             float: right;
-            font-size: 14px;
+            font-size: 3.733vw;
             color: #999999;
         }
     }

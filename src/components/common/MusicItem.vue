@@ -71,8 +71,8 @@ export default {
     border: 0.267vw solid #cccccc;
   }
   .index{
-    margin-right: 10px;
-    font-size: 20px;
+    margin-right: 2.667vw;
+    font-size: 5.333vw;
   }
   .content{
     span{

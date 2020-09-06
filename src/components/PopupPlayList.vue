@@ -128,17 +128,17 @@ export default {
 
 <style lang='scss' scoped>
 .popup-play-list-wrap{
-    padding: 20px;
+    padding: 5.333vw;
 }
 .head{
     span{
         &:first-of-type{
-            font-size: 18px;
+            font-size: 4.8vw;
             color: #4a4a4a;
         }
         &:last-of-type{
-            padding-left: 2px;
-            font-size: 14px;
+            padding-left: 0.533vw;
+            font-size: 3.733vw;
             color: #cccccc;
         }
     }
@@ -148,10 +148,10 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 10px 0;
+    margin: 2.667vw 0;
     & > svg{
-        width: 30px;
-        padding-left: 15px;
+        width: 8vw;
+        padding-left: 4vw;
     }
     & > div{
         flex: 1;
@@ -163,26 +163,26 @@ export default {
 
 ul{
     overflow: scroll;
-    height: 280px;
+    height: 74.667vw;
     &::-webkit-scrollbar{
         display: none;
     }
     li{
-        margin: 20px 0;
+        margin: 5.333vw 0;
         display: flex;
         justify-content: space-between;
         .song-info{
-            width: 250px;
+            width: 66.667vw;
             overflow: hidden;
             // text-overflow:ellipsis;
             white-space: nowrap;
             display: flex;
             align-items: center;
             .song-icon{
-              min-width: 20px;
+              min-width: 5.333vw;
               svg{
-                font-size: 16px;
-                padding-right: 3px;
+                font-size: 4.267vw;
+                padding-right: 0.8vw;
                 color: #fa2800;
               }
             }
@@ -190,11 +190,11 @@ ul{
         }
         span{
             &:first-of-type{
-                font-size: 16px;
+                font-size: 4.267vw;
                 color: #4a4a4a;
             }
             &:last-of-type{
-                font-size: 12px;
+                font-size: 3.2vw;
                 color: #cccccc;
             }
         }
@@ -206,7 +206,7 @@ ul{
         }
 
         svg{
-            font-size: 25px;
+            font-size: 6.667vw;
             color: #cccccc;
         }
     }

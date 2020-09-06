@@ -44,16 +44,16 @@ export default {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    margin: 10px 0;
+    margin: 2.667vw 0;
     & > div{
         display: flex;
         flex-direction: column;
         align-items: center;
         color: #4a4a4a;
-        font-size: 25px;
+        font-size: 6.667vw;
         span{
-            margin-top: 5px;
-            font-size: 14px;
+            margin-top: 1.333vw;
+            font-size: 3.733vw;
         }
     }
 }

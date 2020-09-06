@@ -61,15 +61,15 @@ export default {
 
 <style lang='scss' scoped>
 ul{
-  margin: 20px;
+  margin: 5.333vw;
   li{
     display: flex;
     overflow: hidden;
-    margin: 15px 0;
+    margin: 4vw 0;
     .cover{
-      min-width: 100px;
-      max-width: 100px;
-      margin-right: 10px;
+      min-width: 26.667vw;
+      max-width: 26.667vw;
+      margin-right: 2.667vw;
     }
     .info{
       flex: 1;
@@ -78,23 +78,23 @@ ul{
       justify-content: space-around;
       span{
         color: #4a4a4a;
-        font-size: 20px;
+        font-size: 5.333vw;
       }
       div{
         &>span{
           color: #999999;
-          font-size: 14px;
-          // border-radius: 10px;
-          // padding: 1px 5px;
-          // border: .1px solid #fa2800;
+          font-size: 3.733vw;
+          // border-radius: 2.667vw;
+          // padding: 0.267vw 1.333vw;
+          // border: 0.027vw solid #fa2800;
           // background-color: #fa2800;
 
         }
       }
       p{
-        height: 40px;
+        height: 10.667vw;
         color: #999999;
-        font-size: 14px;
+        font-size: 3.733vw;
         text-overflow: ellipsis;
         display: -webkit-box;
         -webkit-line-clamp: 2;
