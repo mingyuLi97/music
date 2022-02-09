@@ -77,7 +77,7 @@
         </div>
 
         <!-- 下一曲 -->
-        <svg class="icon" aria-hidden="true" @click.stop="playNext(1)">
+        <svg class="icon" aria-hidden="true" v-debounce="5000" @click.stop="_playNext(1)">
           <use xlink:href="#icon-xiayiqu101"></use>
         </svg>
 
@@ -189,6 +189,9 @@ export default {
     getTimeStr(time){
       const timeStr = utils.second2time(time);
       return timeStr.startsWith('00:') ? timeStr.substring(3) :timeStr;
+    },
+    _playNext(index){
+      this.playNext(index);
     }
   }
 };

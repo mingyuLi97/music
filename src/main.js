@@ -4,7 +4,7 @@ import router from './router';
 import store from './store';
 import api from './api';
 
-import Vant from 'vant';
+import vant from 'vant';
 import 'vant/lib/index.css';
 import { Toast } from 'vant';
 import VueLazyLoad from 'vue-lazyload';
@@ -14,7 +14,7 @@ Vue.use(VueLazyLoad,{
   loading:require('./assets/images/loading.gif')					// 替换需要的图片
 });
 
-Vue.use(Vant);
+Vue.use(vant);
 
 import utils from '@/utils';
 
@@ -28,3 +28,18 @@ new Vue({
   store,
   render: h => h(App)
 }).$mount('#app');
+
+Vue.directive('debounce', { 
+  inserted(el, binding) { 
+    let timer = null;
+    el.addEventListener('click', () => { 
+      if (!timer) { 
+        el.style.pointerEvents = 'none'; 
+        timer = setTimeout(() => { 
+          el.style.pointerEvents = 'auto';
+          timer = null;
+        }, binding.value || 500); 
+      }
+    }); 
+  } 
+});

@@ -51,6 +51,7 @@ export default {
             window.localStorage.setItem('loginStatus', true);
           }else{
             this.$toast.fail(res.msg);
+            // vant.Toast.fail(res.msg);
           }
           this.isSubmit = false;
         })
